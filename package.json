@@ -1,7 +1,7 @@
 {
     "name": "bird",
     "version": "0.1.0",
-    "homepage": "https://shygiants.github.io/bird",
+    "homepage": "https://shygiants.github.io/bird-demo",
     "private": true,
     "dependencies": {
         "@babel/core": "^7.16.0",
@@ -74,7 +74,7 @@
         "build": "node scripts/build.js",
         "test": "node scripts/test.js",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d build --repo https://github.com/shygiants/bird.git --user \"Sanhoon Yoon <shygiants@gmail.com>\""
+        "deploy": "gh-pages -d build --repo https://github.com/shygiants/bird-demo.git --user \"Sanhoon Yoon <shygiants@gmail.com>\""
     },
     "eslintConfig": {
         "extends": [
