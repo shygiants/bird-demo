@@ -17,8 +17,8 @@ function getClassNames(idx) {
 export async function predict(data) {
     try {
         const session = await ort.InferenceSession.create(mobilenet);
-        const results = await session.run({ 'input.1': data });
-        const logits = results[419].data;
+        const results = await session.run({ input: data });
+        const logits = results.output.data;
 
         return logits;
     } catch (e) {
