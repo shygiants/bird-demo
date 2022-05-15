@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/bird-demo/static/css/main.e6c13ad2.css",
-    "main.js": "/bird-demo/static/js/main.7de4662c.js",
+    "main.js": "/bird-demo/static/js/main.80fb2aff.js",
     "static/js/787.d00738bd.chunk.js": "/bird-demo/static/js/787.d00738bd.chunk.js",
     "static/js/ort-wasm-simd-threaded.wasm": "/bird-demo/static/js/ort-wasm-simd-threaded.wasm",
     "static/js/ort-wasm-simd.wasm": "/bird-demo/static/js/ort-wasm-simd.wasm",
@@ -11,11 +11,11 @@
     "static/media/sample.jpg": "/bird-demo/static/media/sample.1b00e4332ea71ee35aba.jpg",
     "index.html": "/bird-demo/index.html",
     "main.e6c13ad2.css.map": "/bird-demo/static/css/main.e6c13ad2.css.map",
-    "main.7de4662c.js.map": "/bird-demo/static/js/main.7de4662c.js.map",
+    "main.80fb2aff.js.map": "/bird-demo/static/js/main.80fb2aff.js.map",
     "787.d00738bd.chunk.js.map": "/bird-demo/static/js/787.d00738bd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.7de4662c.js"
+    "static/js/main.80fb2aff.js"
   ]
 }
