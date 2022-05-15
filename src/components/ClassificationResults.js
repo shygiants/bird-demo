@@ -14,28 +14,45 @@ import {
 } from '@chakra-ui/react';
 import { ExternalLinkIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 
-async function getEBirdUrl({ className, latinName }) {
-    const allAboutBirdsUrl = 'https://www.allaboutbirds.org/news/search/?q=';
-    const googleSearchUrl = 'http://www.google.com/search?q=';
-    const eBirdQueryUrl = `https://api.ebird.org/v2/ref/taxon/find?cat=species&key=jfekjedvescr&q=${latinName}`;
+async function queryEBird(scientificName) {
+    const eBirdQueryUrl = `https://api.ebird.org/v2/ref/taxon/find?locale=ko_KR&cat=species&key=jfekjedvescr&q=${scientificName}`;
 
     const resp = await fetch(eBirdQueryUrl);
     const results = await resp.json();
 
-    if (results.length === 0) {
-        return allAboutBirdsUrl + latinName;
+    if (results.length === 0) return null;
+
+    const result = results[0];
+
+    const match = result.name.match(
+        /[\uac00-\ud7af]|[\u1100-\u11ff]|[\u3130-\u318f]|[\ua960-\ua97f]|[\ud7b0-\ud7ff]/g
+    );
+
+    let koreanName = null;
+    if (match !== null) {
+        koreanName = result.name.split('-')[0].trim();
     }
 
-    const code = results[0].code;
-
-    return `https://ebird.org/species/${code}`;
+    return { ...result, koreanName };
 }
+
+const googleSearchUrl = 'http://www.google.com/search?q=';
+const allAboutBirdsUrl = 'https://www.allaboutbirds.org/news/search/?q=';
 
 function Prediction({ className, latinName, confidence }) {
     const [url, setUrl] = useState();
+    const [name, setName] = useState(className);
 
     useEffect(() => {
-        getEBirdUrl({ className, latinName }).then(setUrl);
+        queryEBird(latinName).then((result) => {
+            if (result === null) return setUrl(allAboutBirdsUrl + latinName);
+
+            if (result.koreanName !== null) setName(result.koreanName);
+
+            const code = result.code;
+
+            setUrl(`https://ebird.org/species/${code}`);
+        });
     }, [className, latinName]);
 
     return (
@@ -44,7 +61,7 @@ function Prediction({ className, latinName, confidence }) {
                 <LinkBox>
                     <Heading size="md" my="2">
                         <LinkOverlay isExternal href={url}>
-                            {className}
+                            {name}
                         </LinkOverlay>
                         <ExternalLinkIcon mx="2px" />
                     </Heading>
@@ -65,7 +82,11 @@ export default function ClassificationResults({ results }) {
 
     const help = (
         <VStack spacing={0} p="2" align="start">
-            <Heading size="md">이름</Heading>
+            <HStack>
+                <Heading size="md">이름</Heading>
+                <Text>(한글명 미지원시, 영어명 표시)</Text>
+            </HStack>
+
             <Text>학명</Text>
         </VStack>
     );
